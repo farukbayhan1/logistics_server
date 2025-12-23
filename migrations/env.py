@@ -5,7 +5,10 @@ from sqlalchemy import pool
 from sqlalchemy import create_engine
 
 from alembic import context
-from app import models
+from app.models.address_model import *
+from app.models.user_model import *
+from app.models.email_model import *
+
 from app.db.base import Base
 from app.config import Config
 from dotenv import load_dotenv

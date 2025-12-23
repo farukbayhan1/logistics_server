@@ -14,7 +14,7 @@ class District(Base):
     province_id = Column(Integer,ForeignKey('provinces.id'),nullable=False)
     district_name = Column(String(60),nullable=False)
 
-    __table_args__ = (UniqueConstraint('province_id','distirct_name'),)
+    __table_args__ = (UniqueConstraint('province_id','district_name'),)
 
 class AddressTypeModel(Base):
     __tablename__ = 'address_types'
