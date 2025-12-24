@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, func
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, func, Index
 from app.db.base import Base
 
 class UserTypeModel(Base):
@@ -28,7 +28,7 @@ class UserModel(Base):
     is_active = Column(Boolean,server_default='true',nullable=False)
 
 class UserActivityModel(Base):
-    __tablename__ = 'user_activity_types'
+    __tablename__ = 'user_activities'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
     user_id = Column(Integer,ForeignKey('users.id'),nullable=False)
@@ -38,14 +38,25 @@ class UserActivityModel(Base):
     created_at = Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
     description = Column(String(255),nullable=True)
 
+    __table_args__ = (
+        Index('ix_usr_act_user_id','user_id'),
+        Index('ix_usr_act_created','created_at'),
+        Index('ix_usr_act_activity_type','activity_type_id'),
+    )
+
 class UserSessionModel(Base):
     __tablename__ = 'user_sessions'
     
     id = Column(Integer,primary_key=True,autoincrement=True)
     user_id = Column(Integer,ForeignKey('users.id'),nullable=False)
+    session_id = Column(String(255),unique=True,nullable=False)
     ip_addr = Column(String(45),nullable=True)
     user_agent = Column(String(255),nullable=True)
     created_at = Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
     expires_at = Column(DateTime(timezone=True),nullable=False)
     is_active = Column(Boolean,server_default='true',nullable=False)
     
+    __table_args__ = (
+        Index('ix_usr_sess_user_id','user_id'),
+        Index('ix_usr_sess_created_at','created_at'),
+    )

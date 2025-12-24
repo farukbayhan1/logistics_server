@@ -25,10 +25,10 @@ class EmailModel(Base):
     email = Column(String(320),unique=True,nullable=False)
     created_at = Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
     description = Column(String(252),nullable=True)
-    is_active = Column(Boolean,server_default=func.now())
+    is_active = Column(Boolean,server_default='true')
 
 class EmailActivityModel(Base):
-    __tablename__ = 'email_activity_types'
+    __tablename__ = 'email_activities'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
     user_id = Column(Integer,ForeignKey('users.id'),nullable=False)
@@ -41,8 +41,8 @@ class EmailActivityModel(Base):
 class EmailEntityModel(Base):
     __tablename__ = 'email_entities'
 
-    entity_name = Column(String(255),nullable=False)
-    entity_id = Column(Integer,nullable=False)
-    email_id = Column(Integer,ForeignKey('emails.id'),nullable=False)
+    entity_name = Column(String(255),primary_key=True,nullable=False)
+    entity_id = Column(Integer,primary_key=True,nullable=False)
+    email_id = Column(Integer,ForeignKey('emails.id'),primary_key=True,nullable=False)
 
     __table_args__ = (UniqueConstraint('entity_name','entity_id','email_id'),)
