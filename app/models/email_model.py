@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, func, UniqueConstraint
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, func, UniqueConstraint, text
 from app.db.base import Base
 
 class EmailTypeModel(Base):
@@ -25,7 +25,7 @@ class EmailModel(Base):
     email = Column(String(320),unique=True,nullable=False)
     created_at = Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
     description = Column(String(252),nullable=True)
-    is_active = Column(Boolean,server_default='true')
+    is_active = Column(Boolean,server_default=text('true'))
 
 class EmailActivityModel(Base):
     __tablename__ = 'email_activities'

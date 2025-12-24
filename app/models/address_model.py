@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, func, UniqueConstraint, Index
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, func, UniqueConstraint, Index, text
 from app.db.base import Base
 
 class Province(Base):
@@ -43,7 +43,7 @@ class AddressModel(Base):
     location = Column(String(255),nullable=True)
     created_at = Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
     description = Column(String(255),nullable=True)
-    is_active = Column(Boolean,server_default='true',nullable=False)
+    is_active = Column(Boolean,server_default=text('true'),nullable=False)
 
     __table_args__ = (
         UniqueConstraint('type_id','province_id','district_id','address_text',name='uq_addr'),

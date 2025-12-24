@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, func, Index
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, func, Index, text
 from app.db.base import Base
 
 class UserTypeModel(Base):
@@ -25,7 +25,7 @@ class UserModel(Base):
     password = Column(String(255),nullable=False)
     created_at = Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
     description = Column(String(255),nullable=True)
-    is_active = Column(Boolean,server_default='true',nullable=False)
+    is_active = Column(Boolean,server_default=text('true'),nullable=False)
 
 class UserActivityModel(Base):
     __tablename__ = 'user_activities'
@@ -54,7 +54,7 @@ class UserSessionModel(Base):
     user_agent = Column(String(255),nullable=True)
     created_at = Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
     expires_at = Column(DateTime(timezone=True),nullable=False)
-    is_active = Column(Boolean,server_default='true',nullable=False)
+    is_active = Column(Boolean,server_default=text('true'),nullable=False)
     
     __table_args__ = (
         Index('ix_usr_sess_user_id','user_id'),

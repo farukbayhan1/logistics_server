@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, func, UniqueConstraint, Index
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, func, UniqueConstraint, Index, text
 from app.db.base import Base
 
 class AuthActivityType(Base):
@@ -32,7 +32,7 @@ class RefreshToken(Base):
     token = Column(String(500),unique=True,nullable=False)
     created_at = Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
     expires_at = Column(DateTime(timezone=True),nullable=False)
-    revoked = Column(Boolean,server_default='false',nullable=False)
+    revoked = Column(Boolean,server_default=text('false'),nullable=False)
     user_agent = Column(String(255),nullable=True)
     session_id = Column(String(255),ForeignKey('user_sessions.session_id'),nullable=False)
 
