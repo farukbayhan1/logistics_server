@@ -1,14 +1,14 @@
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, func, UniqueConstraint, text
 from app.db.base import Base
 
-class OrderStatusModel(Base):
+class OrderDocumentStatusModel(Base):
     pass
 
-class OrderActivityTypeModel(Base):
+class OrderDocumentActivityTypeModel(Base):
     pass
 
-class OrderModel(Base):
+class OrderDocumentModel(Base):
     pass
 
-class OrderActivityModel(Base):
+class OrderDocumentActivities(Base):
     pass
