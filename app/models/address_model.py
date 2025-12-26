@@ -2,12 +2,14 @@ from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, f
 from app.db.base import Base
 
 class Province(Base):
+
     __tablename__ = 'provinces'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
     province_name = Column(String(60),unique=True,nullable=False)
 
 class District(Base):
+
     __tablename__ = 'districts'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -17,6 +19,7 @@ class District(Base):
     __table_args__ = (UniqueConstraint('province_id','district_name'),)
 
 class AddressTypeModel(Base):
+
     __tablename__ = 'address_types'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -25,6 +28,7 @@ class AddressTypeModel(Base):
     description = Column(String(255),nullable=True)
 
 class AdressActivityTypeModel(Base):
+
     __tablename__ = 'address_activity_types'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -33,6 +37,7 @@ class AdressActivityTypeModel(Base):
     description = Column(String(255),nullable=False)
 
 class AddressModel(Base):
+
     __tablename__ = 'addresses'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -50,6 +55,7 @@ class AddressModel(Base):
     )
 
 class AddressActivityModel(Base):
+
     __tablename__ = 'address_activities'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -68,6 +74,7 @@ class AddressActivityModel(Base):
     )
 
 class AddressEntityModel(Base):
+    
     __tablename__ = 'address_entities'
 
     entity_name = Column(String(255),primary_key=True,nullable=False)

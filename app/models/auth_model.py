@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, f
 from app.db.base import Base
 
 class AuthActivityType(Base):
+
     __tablename__ = 'auth_activity_types'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -10,6 +11,7 @@ class AuthActivityType(Base):
     description = Column(String(255),nullable=True)
 
 class AuthActivity(Base):
+
     __tablename__ = 'auth_activities'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -25,6 +27,7 @@ class AuthActivity(Base):
     )
 
 class RefreshToken(Base):
+    
     __tablename__ = 'refresh_tokens'
 
     id = Column(Integer,primary_key=True,autoincrement=True)

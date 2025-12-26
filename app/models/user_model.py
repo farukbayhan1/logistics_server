@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, f
 from app.db.base import Base
 
 class UserTypeModel(Base):
+
     __tablename__ = 'user_types'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -10,6 +11,7 @@ class UserTypeModel(Base):
     description = Column(String(255),nullable=True)
 
 class UserActivityTypeModel(Base):
+
     __tablename__ = 'user_activity_types'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -18,6 +20,7 @@ class UserActivityTypeModel(Base):
     description = Column(String(255),nullable=True)
 
 class UserModel(Base):
+
     __tablename__ = 'users'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -28,6 +31,7 @@ class UserModel(Base):
     is_active = Column(Boolean,server_default=text('true'),nullable=False)
 
 class UserActivityModel(Base):
+
     __tablename__ = 'user_activities'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -45,6 +49,7 @@ class UserActivityModel(Base):
     )
 
 class UserSessionModel(Base):
+    
     __tablename__ = 'user_sessions'
     
     id = Column(Integer,primary_key=True,autoincrement=True)

@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, f
 from app.db.base import Base
 
 class ClientType(Base):
+
     __tablename__ = 'client_types'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -10,6 +11,7 @@ class ClientType(Base):
     description = Column(String(255),nullable=True)
 
 class ClientActivityType(Base):
+
     __tablename__ = 'client_activity_types'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -18,6 +20,7 @@ class ClientActivityType(Base):
     description = Column(String(30),nullable=True)
 
 class Client(Base):
+
     __tablename__ = 'clients'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -33,6 +36,7 @@ class Client(Base):
     )
 
 class ClientActivity(Base):
+    
     __tablename__ = 'client_activities'
 
     id = Column(Integer,primary_key=True,autoincrement=True)

@@ -1,7 +1,8 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, func, UniqueConstraint, text
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, func, UniqueConstraint, text, Index
 from app.db.base import Base
 
 class EmailTypeModel(Base):
+
     __tablename__ = 'email_types'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -10,6 +11,7 @@ class EmailTypeModel(Base):
     description = Column(String(255),nullable=True)
 
 class EmailActivityTypeModel(Base):
+
     __tablename__ = 'email_activity_types'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -18,6 +20,7 @@ class EmailActivityTypeModel(Base):
     description = Column(String(255),nullable=True)
 
 class EmailModel(Base):
+
     __tablename__ = 'emails'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -28,17 +31,26 @@ class EmailModel(Base):
     is_active = Column(Boolean,server_default=text('true'))
 
 class EmailActivityModel(Base):
+
     __tablename__ = 'email_activities'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
     user_id = Column(Integer,ForeignKey('users.id'),nullable=False)
+    email_id = Column(Integer,ForeignKey('emails.id'),nullable=False)
     activity_type_id = Column(Integer,ForeignKey('email_activity_types.id'),nullable=False)
     old_value = Column(String(320),nullable=True)
     new_value = Column(String(320),nullable=True)
     created_at = Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
     description = Column(String(255),nullable=True)
 
+    __table_args__ = (
+        Index('ix_ema_act_user_id','user_id'),
+        Index('ix_ema_act_email_id','email_id'),
+        Index('ix_ema_act_created_at','created_at'),
+    )
+
 class EmailEntityModel(Base):
+    
     __tablename__ = 'email_entities'
 
     entity_name = Column(String(255),primary_key=True,nullable=False)

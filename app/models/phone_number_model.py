@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, f
 from app.db.base import Base
 
 class PhoneNumberTypeModel(Base):
+
     __tablename__ = 'phone_number_types'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -10,6 +11,7 @@ class PhoneNumberTypeModel(Base):
     description = Column(String(255),nullable=True)
 
 class PhoneNumberActivityTypeModel(Base):
+    
     __tablename__ = 'phone_number_activity_types'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -18,6 +20,7 @@ class PhoneNumberActivityTypeModel(Base):
     description = Column(String(255),nullable=True)
 
 class PhoneNumberModel(Base):
+
     __tablename__ = 'phone_numbers'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
@@ -28,12 +31,13 @@ class PhoneNumberModel(Base):
     is_active = Column(Boolean,server_default=text('true'),nullable=False)
 
 class PhoneNumberActivityModel(Base):
+
     __tablename__ = 'phone_number_activities'
 
     id = Column(Integer,primary_key=True,autoincrement=True)
     user_id = Column(Integer,ForeignKey('users.id'),nullable=False)
     phone_number_id = Column(Integer,ForeignKey('phone_numbers.id'),nullable=False)
-    activity_type_id = Column(Integer,ForeignKey('number_number_activity_types.id'),nullable=False)
+    activity_type_id = Column(Integer,ForeignKey('phone_number_activity_types.id'),nullable=False)
     old_value = Column(String(255),nullable=True)
     new_value = Column(String(255),nullable=True)
     created_at = Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
@@ -46,6 +50,7 @@ class PhoneNumberActivityModel(Base):
     )
 
 class PhoneNumberEntityModel(Base):
+    
     __tablename__ = 'phone_number_entities'
 
     entity_name = Column(String(255),primary_key=True,nullable=False)
