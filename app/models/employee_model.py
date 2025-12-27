@@ -5,14 +5,14 @@ class GenderModel(Base):
 
     __tablename__ = 'genders'
     
-    id = Column(Integer,primary_key=True,autoincerement=True)
+    id = Column(Integer,primary_key=True,autoincrement=True)
     gender_name = Column(String(30),unique=True,nullable=False)
 
 class EmployeeUnitModel(Base):
     
     __tablename__ = 'employee_units'
 
-    id = Column(Integer,primary_key=True,autoincerement=True)
+    id = Column(Integer,primary_key=True,autoincrement=True)
     unit_name = Column(String(30),unique=True,nullable=False)
     created_at = Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
     description = Column(String(255),nullable=True)
@@ -21,7 +21,7 @@ class EmployeePositionModel(Base):
     
     __tablename__ = 'employee_positions'
 
-    id = Column(Integer,primary_key=True,autoincerement=True)
+    id = Column(Integer,primary_key=True,autoincrement=True)
     position_name = Column(String(30),unique=True,nullable=False)
     created_at = Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
     description = Column(String(255),nullable=True)
@@ -30,7 +30,7 @@ class EmployeeModel(Base):
     
     __tablename__ = 'employees'
 
-    id = Column(Integer,primary_key=True,autoincerement=True)
+    id = Column(Integer,primary_key=True,autoincrement=True)
     gender_id = Column(Integer,ForeignKey('genders.id'),nullable=False)
     unit_id = Column(Integer,ForeignKey('employee_units.id'),nullable=False)
     position_id = Column(Integer,ForeignKey('employee_positions.id'),nullable=False)
@@ -48,7 +48,7 @@ class EmployeeActivityTypeModel(Base):
     
     __tablename__ = 'employee_activity_types'
 
-    id = Column(Integer,primary_key=True,autoincerement=True)
+    id = Column(Integer,primary_key=True,autoincrement=True)
     type_name = Column(String(30),unique=True,nullable=False)
     created_at = Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
     description = Column(String(255),nullable=True)
