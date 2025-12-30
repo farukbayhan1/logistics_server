@@ -1,8 +1,6 @@
 
 class BaseValidator:
-
     def type_name_validator(self,data:dict):
-
         if "type_name" not in data:
             raise ValueError("type name required")
         
@@ -26,7 +24,6 @@ class BaseValidator:
         }
     
     def single_id_validate(self,field_name:str,value):
-        
         if value is None:
             raise ValueError(f"{field_name}: can not be empty")
         if isinstance(value,bool) or not isinstance(value,int):
@@ -37,7 +34,6 @@ class BaseValidator:
         return value
 
     def description_validate(self,field_name:str,value):
-
         if value is None:
             return None
         
@@ -51,7 +47,6 @@ class BaseValidator:
         return value
     
     def text_validate(self,field_name,value):
-        
         if value is None:
             raise ValueError(f"{field_name}: can not be empty")
         if not isinstance(value,str):
@@ -62,3 +57,13 @@ class BaseValidator:
             raise ValueError(f"{field_name}: can not be smaller than 2 characters")
         
         return value
+    
+    def is_active_validate(self,field_name,value:bool):
+        if value is None:
+            raise ValueError(f"{field_name}: can not be empty")
+        
+        if isinstance(value,int):
+            if value in (0,1):
+                return bool(value)
+        
+        raise ValueError(f"{field_name} must be a boolean")
