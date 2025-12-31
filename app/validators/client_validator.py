@@ -79,10 +79,3 @@ class UpdateClientValidator(CreateClientValidator):
 
         if not any(v is not None for v in updatable_fields):
             raise ValueError("at least one field must be provided for update")
-        
-    
-        
-         
-        
-        
-           

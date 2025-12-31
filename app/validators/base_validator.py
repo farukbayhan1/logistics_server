@@ -1,3 +1,4 @@
+from datetime import datetime, date
 
 class BaseValidator:
     def type_name_validator(self,data:dict):
@@ -58,7 +59,19 @@ class BaseValidator:
         
         return value
     
-    def is_active_validate(self,field_name,value:bool):
+    def text_validate_lower(self,field_name,value):
+        if value is None:
+            raise ValueError(f"{field_name}: can not be empty")
+        if not isinstance(value,str):
+            raise ValueError(f"{field_name}: must be a string")
+        
+        value = value.strip()
+        if len(value) < 2:
+            raise ValueError(f"{field_name}: can not be smaller than 2 characters")
+        
+        return value.lower()
+    
+    def is_active_validate(self,field_name:str,value:bool):
         if value is None:
             raise ValueError(f"{field_name}: can not be empty")
         
@@ -67,3 +80,25 @@ class BaseValidator:
                 return bool(value)
         
         raise ValueError(f"{field_name} must be a boolean")
+    
+    def date_validate(self,field_name,value):
+        if value is None:
+            raise ValueError(f"{field_name}: required")
+        
+        if isinstance(value,date) or isinstance(value,datetime):
+            return value
+        
+        if isinstance(value,str):
+            if not value:
+                raise ValueError("date can not be empty")
+            
+            try:
+                date_value = datetime.strptime(value,"%Y-%m-%d").date()
+
+            except ValueError:
+                raise("date format must be in YYYY-MM-DD")
+            
+            return date_value
+        
+    def time_stamp_validator(self,field_name:str,value):
+        self
