@@ -2,12 +2,14 @@ from .base_validator import BaseValidator
 from datetime import date, datetime
 
 class CreateGenderValidator(BaseValidator):
-    def validate(self,data:dict):
-        gender_name = (data.get("gender_name"))
-        
+    def __init__(self,data:dict):
+        self.data = data
+
+    def validate(self):
+        gender_name = self.data.get("gender_name")
         if gender_name is None:
             raise ValueError("gender name required")
-        if isinstance(gender_name,str):
+        if not isinstance(gender_name,str):
             raise ValueError("gender name must be a string")
         
         gender_name = str(gender_name).strip()
@@ -15,29 +17,43 @@ class CreateGenderValidator(BaseValidator):
         if not gender_name:
             raise ValueError("gender name can not be empty")
         
-        if len(gender_name) < 20:
+        if len(gender_name) > 20:
             raise ValueError("gender name must be smaller than 20 characters")
         
-        return gender_name.lower()
-
-class CreateEmployeeUnitValidator(BaseValidator):
-    def validate(self,data:dict):
-        unit_name = self.text_validate('unit_name',data.get("unit_name"))
-        description = self.description_validate('description',data.get("description"))
+        if not gender_name.replace(" ","").isalpha():
+            raise ValueError("gender name only contain alphabetic characters")
+        
+        description = self.description_validate(self.data.get("description"))
 
         return {
-            "unit_name":unit_name.lower(),
-            "description":description.lower()
+            "gender_name":gender_name.lower(),
+            "description":description
+        }                                           
+
+class CreateEmployeeUnitValidator(BaseValidator):
+    def __init__(self,data:dict):
+        self.data = data
+    
+    def validate(self):
+        unit_name = self.text_validate_lower('unit_name',self.data.get("unit_name"))
+        description = self.description_validate('description',self.data.get("description"))
+        
+        return {
+            "unit_name":unit_name,
+            "description":description
         }
 
 class CreateEmployeePositionValidator(BaseValidator):
-    def validate(self,data:dict):
-        position_name = self.text_validate('position_name',data.get("position_name"))
-        description = self.text_validate('description',data.get("description"))
+    def __init__(self,data:dict):
+        self.data = data
+
+    def validate(self):
+        position_name = self.text_validate_lower('position_name',self.data.get("position_name"))
+        description = self.description_validate('description',self.data.get("description"))
 
         return {
-            "position_name":position_name.lower(),
-            "description":description.lower()
+            "position_name":position_name,
+            "description":description
         }
 
 class CreateEmployeeValidator(BaseValidator):
@@ -94,8 +110,11 @@ class CreateEmployeeValidator(BaseValidator):
             return salary
         
 class CreateEmployeeActivityValidator(BaseValidator):
-    def validate(self,data:dict):
-        return self.type_name_validator(data)
+    def __init__(self,data:dict):
+        self.data = data
+
+    def validate(self):
+       return self.type_name_validator(self.data)
 
 class UpdateEmployeeValidator(CreateEmployeeValidator):
     def __init__(self,employee_id:int,**kwargs):

@@ -13,6 +13,8 @@ from .vehicle_model import *
 from .warehouse_model import *
 from .order_model import *
 from. trip_model import *
+from .contact_model import *
+
 
 
 

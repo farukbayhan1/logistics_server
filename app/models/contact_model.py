@@ -1,0 +1,60 @@
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, func, UniqueConstraint, text, Index
+from app.db.base import Base
+
+class ContactTypeModel(Base):
+    
+    __tablename__ = 'contact_types'
+
+    id = Column(Integer,primary_key=True,autoincrement=True)
+    type_name = Column(String(30),unique=True,nullable=False)
+    description = Column(String(255),nullable=True)
+    created_at = Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
+
+class ContactActivityTypeModel(Base):
+    
+    __tablename__ = 'contact_activity_types'
+
+    id = Column(Integer,primary_key=True,autoincrement=True)
+    type_name = Column(String(30),unique=True,nullable=False)
+    description = Column(String(255),nullable=True)
+    created_at = Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
+
+class ContactModel(Base):
+    __tablename__ = 'contacts'
+
+    id = Column(Integer,primary_key=True,autoincrement=True) 
+    type_id = Column(Integer,ForeignKey('contact_types.id'),nullable=False)
+    contact_name = Column(String(60),unique=True,nullable=False)
+    created_at = Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
+    description = Column(String(255),nullable=True)
+    is_active = Column(Boolean,server_default=text('true'),nullable=False)
+
+class ContactActivityModel(Base):
+    
+    __tablename__ = 'contact_activities'
+
+    id = Column(Integer,primary_key=True,autoincrement=True)
+    user_id = Column(Integer,ForeignKey('users.id'),nullable=False)
+    contact_id = Column(Integer,ForeignKey('contacts.id'),nullable=False)
+    old_value = Column(String(255),nullable=True)
+    new_value = Column(String(255),nullable=True)
+    created_at = Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
+    description = Column(String(255),nullable=True)
+
+    __table_args__ = (
+        Index('ix_con_act_user_id','user_id'),
+        Index('ix_con_act_contact_id','contact_id'),
+        Index('ix_con_act_created_at','created_at'),
+    )
+
+class ContactEntityModel(Base):
+    
+    __tablename__ = 'contact_entities'
+
+    entity_name = Column(String(255),primary_key=True,nullable=False)
+    entity_id = Column(Integer,primary_key=True,nullable=False)
+    contact_id = Column(Integer,ForeignKey('contacts.id'),primary_key=True,nullable=False)
+
+    __table_args__ = (
+        UniqueConstraint('entity_name','entity_id','contact_id',name='uq_contact'),
+    )

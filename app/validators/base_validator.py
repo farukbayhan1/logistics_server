@@ -17,7 +17,7 @@ class BaseValidator:
         if not type_name.replace(" ","").isalpha():
             raise ValueError("type name can not contain numeric characters")
         
-        description = self.description_validate()
+        description = self.description_validate('description',data.get("description"))
 
         return {
             "type_name":type_name,

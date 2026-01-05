@@ -1,12 +1,18 @@
 from .base_validator import BaseValidator
 
 class CreateAddressTypeValidator(BaseValidator):
-    def validate(self,data:dict):
-        return self.type_name_validator(data)
+    def __init__(self,data:dict):
+        self.data = data
+
+    def validate(self):
+        return self.type_name_validator(self.data)
 
 class CreateAdressActivityTypeValidator(BaseValidator):
-    def validate(self,data:dict):
-        return self.type_name_validator(data)
+    def __init__(self,data:dict):
+        self.data = data
+
+    def validate(self):
+        return self.type_name_validator(self.data)
 
 class CreateAddressValidator(BaseValidator):
     def __init__(self,data:dict):
