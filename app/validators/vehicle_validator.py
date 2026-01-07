@@ -31,12 +31,22 @@ class CreateVehicleValidator(BaseValidator):
     
 
     def plate_validate(self,field_name:str,plate):
-        pattern = r""
+        pattern = r"^(0[1-9]|[1-7][0-9]|8[01])\s[A-Z]{1,3}\s\d{2,4}$"
         
         if not re.match(pattern,plate):
             raise ValueError(f"{field_name}: incorrect plate format")
 
-    def model_year_validate(self,field_name:str,model_year):
+    def model_year_validate(self,field_name:str,model_year:int):
+        if not isinstance(model_year,int):
+            raise ValueError("model year must be an integer")
+        
+        accepted_year = datetime.now().year + 1
+        if model_year >= accepted_year:
+            raise ValueError(f"{field_name}: model year can not bigger than {accepted_year}")
+        if model_year <= 1950:
+            raise ValueError(f"{field_name}: incorrect model year format")
+    
+    def capacity_validate(self):
         pass
 
 class UpdateVehicleTypeValidator(BaseValidator):

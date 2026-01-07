@@ -83,7 +83,7 @@ class UpdateTripValidator(BaseValidator):
         self.status_id = kwargs.get("status_id")
         self.vehicle_id = kwargs.get("vehicle_id")
         self.driver_id = kwargs.get("driver_id")
-        self.courier_id = kwargs.get("couried_id")
+        self.courier_id = kwargs.get("courier_id")
         self.loaded_province_id = kwargs.get("loaded_province_id")
         self.loaded_district_id = kwargs.get("loaded_district_id")
         self.destination_province_id = kwargs.get("destination_province_id")
