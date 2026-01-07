@@ -40,8 +40,8 @@ class CreateVehicleValidator(BaseValidator):
         if not isinstance(model_year,int):
             raise ValueError("model year must be an integer")
         
-        accepted_year = datetime.now().year + 1
-        if model_year >= accepted_year:
+        max_year = datetime.now().year + 1
+        if model_year >= max_year:
             raise ValueError(f"{field_name}: model year can not bigger than {accepted_year}")
         if model_year <= 1950:
             raise ValueError(f"{field_name}: incorrect model year format")
