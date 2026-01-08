@@ -26,9 +26,18 @@ class CreateVehicleValidator(BaseValidator):
         brand = self.text_validate('brand',self.data.get("brand"))
         model = self.text_validate('model',self.data.get("model"))
         model_year = self.model_year_validate('model_year',self.data.get("model_year"))
-        capacity = ""
+        capacity = self.capacity_validate('capacity',self.data.get("capacity"))
         description = self.description_validate('description',self.data.get("description"))
     
+        return {
+            "type_id":type_id,
+            "plate":plate,
+            "brand":brand,
+            "model":model,
+            "model_year":model_year,
+            "capacity":capacity,
+            "description":description
+        }
 
     def plate_validate(self,field_name:str,plate):
         pattern = r"^(0[1-9]|[1-7][0-9]|8[01])\s[A-Z]{1,3}\s\d{2,4}$"
@@ -36,6 +45,8 @@ class CreateVehicleValidator(BaseValidator):
         if not re.match(pattern,plate):
             raise ValueError(f"{field_name}: incorrect plate format")
 
+        return plate
+    
     def model_year_validate(self,field_name:str,model_year:int):
         if not isinstance(model_year,int):
             raise ValueError("model year must be an integer")
@@ -45,9 +56,21 @@ class CreateVehicleValidator(BaseValidator):
             raise ValueError(f"{field_name}: model year can not bigger than {accepted_year}")
         if model_year <= 1950:
             raise ValueError(f"{field_name}: incorrect model year format")
+
+        return model_year
     
-    def capacity_validate(self):
-        pass
+    def capacity_validate(self,field_name:str,capacity):
+        max_digits = 5
+        max_decimals = 2
+
+        if abs(capacity) >= 10 ** max_digits:
+            raise ValueError(f"{field_name}: too many digits")
+        
+        decimals = str(capacity).split(".")[1] if "." in str(capacity) else ""
+        if len(decimals) > max_decimals:
+            raise ValueError("too many decimals")
+        
+        return capacity
 
 class UpdateVehicleTypeValidator(BaseValidator):
     pass
