@@ -72,8 +72,92 @@ class CreateVehicleValidator(BaseValidator):
         
         return capacity
 
-class UpdateVehicleTypeValidator(BaseValidator):
-    pass
+class UpdataVehicleValidator(CreateVehicleValidator):
+    def __init__(self,vehicle_id,**kwargs):
+        self.vehicle_id = vehicle_id
+        self.type_id = kwargs.get("type_id")
+        self.plate = kwargs.get("plate")
+        self.brand = kwargs.get("brand")
+        self.model = kwargs.get("model")
+        self.model_year = kwargs.get("model_year")
+        self.capacity = kwargs.get("capacity")
+        self.description = kwargs.get("description")
+        self.is_active = kwargs.get("description")
 
-class UpdateVehicleValidator(BaseValidator):
-    pass
+    def validate(self):
+        self.single_id_validate('vehicle_id',self.vehicle_id)
+        self._check_updatable_fields()
+
+        data = {}
+
+        if self.type_id is not None:
+            self.single_id_validate('type_id',self.type_id)
+            data["type_id"] = self.type_id
+        if self.plate is not None:
+            self.plate_validate('plate',self.plate)
+            data["plate"] = self.plate
+        if self.brand is not None:
+            self.text_validate('brand',self.brand)
+            data["brand"] = self.brand
+        if self.model is not None:
+            self.text_validate('model',self.model)
+            data["model"] = self.model
+        if self.model_year is not None:
+            self.model_year_validate('model_year',self.model_year)
+            data["model_year"] = self.model_year
+        if self.capacity is not None:
+            self.capacity_validate('capacity',self.capacity)
+            data["capacity"] = self.capacity
+        if self.description is not None:
+            self.description_validate('description',self.description)
+            data["description"] = self.description
+        if self.is_active is not None:
+            self.is_active_validate('is_active',self.is_active)
+            data["is_active"] = self.is_active
+        
+        return data
+
+    def _check_updatable_fields(self):
+        updatable_fields = [
+            self.type_id,
+            self.plate,
+            self.brand,
+            self.model,
+            self.model_year,
+            self.capacity,
+            self.description,
+            self.is_active
+        ]
+
+        if not any(v is not None for v in updatable_fields):
+            raise ValueError("at least one field provided for update")
+
+class UpdataVehicleTypeValidator(BaseValidator):
+    def __init__(self,type_id,**kwargs):
+        self.type_id = type_id
+        self.type_name = kwargs.get("type_name")
+        self.description = kwargs.get("description")
+
+    def validate(self):
+        self.single_id_validate('type_id',self.type_id)
+        self._check_updatable_fields()
+
+        data = {}
+
+        if self.type_name is not None:
+            self.text_validate_lower('type_name',self.type_name)
+            data["type_name"] = self.type_name
+        if self.description is not None:
+            self.description_validate('description',self.description)
+            data["description"] = self.description
+
+        return data
+
+    def _check_updatable_fields(self):
+        updatable_fields = [
+            self.type_name,
+            self.description
+        ]
+
+        if not any(v is not None for v in updatable_fields):
+            raise ValueError("at least one field provided for update")
