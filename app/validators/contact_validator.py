@@ -42,14 +42,40 @@ class UpdateContactTypeValidator(BaseValidator):
         data = {}
 
         if self.type_name is not None:
-            self.text_validate_lower('type_name',self.type_name)
-            data["type_name"] = self.type_name
+            data["type_name"] = self.text_validate_lower('type_name',self.type_name)
         if self.description is not None:
-            self.description_validate('description',self.description)
-            data["description"] = self.description
+            data["description"] = self.description_validate('description',self.description)
 
         return data
 
+    def _check_updatable_fields(self):
+        updatable_fields = [
+            self.type_name,
+            self.description
+        ]
+
+        if not any(v is not None for v in updatable_fields):
+            raise ValueError("at least one field provided for update")
+
+class UpdateContactActivityTypeValidator(BaseValidator):
+    def __init__(self,type_id:int,**kwargs):
+        self.type_id = type_id
+        self.type_name = kwargs.get("type_name")
+        self.description = kwarg.get("description")
+
+    def validate(self):
+        self.single_id_validate('type_id',self.type_id)
+        self._check_updatable_fields()
+
+        data = {}
+
+        if self.type_name is not None:
+            data["type_name"] = self.text_validate_lower('type_name',self.type_name)
+        if self.description is not None:
+            data["description"] = self.description_validate('description',self.description)
+
+        return data
+        
     def _check_updatable_fields(self):
         updatable_fields = [
             self.type_name,
