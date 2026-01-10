@@ -100,17 +100,13 @@ class UpdateContactValidator(BaseValidator):
         data = {}
 
         if self.type_id is not None:
-            self.single_id_validate('type_id',self.type_id)
-            data["type_id"] = self.type_id
+            data["type_id"] = self.single_id_validate('type_id',self.type_id)
         if self.contact_name is not None:
-            self.text_validate('contact_name',self.contact_name)
-            data["contact_name"] = self.contact_name
+            data["contact_name"] = self.text_validate('contact_name',self.contact_name)
         if self.description is not None:
-            self.description_validate('description',self.description)
-            data["description"] = self.description
+            data["description"] = self.description_validate('description',self.description)
         if self.is_active is not None:
-            self.is_active_validate('is_active',self.is_active)
-            data["is_active"] = self.is_active
+            data["is_active"] = self.is_active_validate('is_active',self.is_active)
 
         return data
         

@@ -138,20 +138,15 @@ class UpdateEmployeeValidator(CreateEmployeeValidator):
         data = {}
 
         if self.gender_id is not None:
-            self.single_id_validate('gender_id',self.gender_id)
-            data["gender_id"] = self.gender_id
+            data["gender_id"] = self.single_id_validate('gender_id',self.gender_id)
         if self.unit_id is not None:
-            self.single_id_validate('unit_id',self.unit_id)
-            data["unit_id"] = self.unit_id
+            data["unit_id"] = self.single_id_validate('unit_id',self.unit_id)
         if self.position_id is not None:
-            self.single_id_validate('position_id',self.position_id)
-            data["position_id"] = self.position_id
+            data["position_id"] = self.single_id_validate('position_id',self.position_id)
         if self.name is not None:
-            self.text_validate('name',self.name)
-            data["name"] = self.name
+            data["name"] = self.text_validate('name',self.name)
         if self.surname is not None:
-            self.text_validate('surname',self.surname)
-            data["surname"] = self.surname
+            data["surname"] = self.text_validate('surname',self.surname)
         if self.started_at is not None:
             self.date_validate('started_at',self.started_at)
             data["started_at"] = self.started_at
@@ -199,11 +194,9 @@ class UpdateEmployeePositionValidator(BaseValidator):
         data = {}
 
         if self.position_name is not None:
-            self.text_validate_lower('position_name',self.position_name)
-            data["position_name"] = self.position_name
+            data["position_name"] = self.text_validate_lower('position_name',self.position_name)
         if self.description is not None:
-            self.description_validate('description',self.description)
-            data["description"] = self.description
+            data["description"] = self.description_validate('description',self.description)
 
         return data
     
@@ -229,11 +222,9 @@ class UpdateEmployeeUnitValidator(BaseValidator):
         data = {}
 
         if self.unit_name is not None:
-            self.text_validate_lower('unit_name',self.unit_name)
-            data["unit_name"] = self.unit_name
+            data["unit_name"] = self.text_validate_lower('unit_name',self.unit_name)
         if self.description is not None:
-            self.description_validate('description',self.description)
-            data["description"] = self.description
+            data["description"] = self.description_validate('description',self.description)
 
         return data
 

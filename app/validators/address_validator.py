@@ -32,6 +32,63 @@ class CreateAddressValidator(BaseValidator):
             "address_text":self.address_text,
             "description":self.description
         }
+
+class UpdateAddressTypeValidator(BaseValidator):
+    def __init__(self,type_id:int,**kwargs):
+        self.type_id = type_id
+        self.type_name = kwargs.get("type_name")
+        self.description = kwargs.get("description")
+
+    def validate(self):
+        self.single_id_validate('type_id',self.type_id)
+        self._check_updatable_fields()
+
+        data = {}
+
+        if self.type_name is not None:
+            data["type_name"] = self.text_validate_lower('type_name',self.type_name)
+        if self.description is not None:
+            data["description"] = self.description_validate('description',self.description)
+
+        return data
+
+    def _check_updatable_fields(self):
+        updatable_fields = [
+            self.type_name,
+            self.description
+        ]
+
+        if not any(v is not None for v in updatable_fields):
+            raise ValueError("at least one field provided for update")
+
+class UpdateAddressActivityTypeValidator(BaseValidator):
+    
+    def __init__(self,type_id:int,**kwargs):
+        self.type_id = type_id
+        self.type_name = kwargs.get("type_name")
+        self.description = kwargs.get("description")
+
+    def validate(self):
+        self.single_id_validate('type_id',self.type_id)
+        self._check_updatable_fields()
+
+        data = {}
+
+        if self.type_name is not None:
+            data["type_name"] = self.text_validate_lower('type_name',self.type_name)
+        if self.description is not None:
+            data["description"] = self.description_validate('description',self.description)
+
+        return data
+        
+    def _check_updatable_fields(self):
+        updatable_fields = [
+            self.type_name,
+            self.description
+        ]
+
+        if not any(v is not None for v in updatable_fields):
+            raise ValueError("at least one field provided for update")
         
 class UpdateAddressValidator(BaseValidator):
     def __init__(self,address_id:int,**kwargs):
@@ -66,7 +123,7 @@ class UpdateAddressValidator(BaseValidator):
             data["is_active"] = self.is_active_validate('is_active',self.is_active)
         
         return data
-
+    
     def _check_updatable_fields(self):
         updatable_fields = [
             self.type_id,
@@ -77,63 +134,8 @@ class UpdateAddressValidator(BaseValidator):
             self.description,
             self.is_active
         ]
-        
+
         if not any(v is not None for v in updatable_fields):
-            raise ValueError("at least one field must be provided for update")
+            raise ValueError("at least one field provided for update")
     
-
-class UpdateAddressTypeValidator(BaseValidator):
-    def __init__(self,type_id:int,**kwargs):
-        self.type_id = type_id
-        self.type_name = kwargs.get("type_name")
-        self.description = kwargs.get("description")
-
-    def validate(self):
-        self.single_id_validate('type_id',self.type_id)
-        self._check_updatable_fields()
-
-        data = {}
-
-        if self.type_name is not None:
-            data["type_name"] = self.text_validate_lower('type_name',self.type_name)
-        if self.description is not None:
-            data["description"] = self.description_validate('description',self.description)
-
-        return data
-
-    def _check_updatable_fields(self):
-        updatable_fields = [
-            self.type_name,
-            self.description
-        ]
-
-        if not any(v is not None for v in updatable_fields):
-            raise ValueError("at least one field provided for update")
-
-class UpdateAddressActivityTypeValidator(BaseValidator):
-    def __init__(self,type_id:int,**kwargs):
-        self.type_id = type_id
-        self.type_name = kwargs.get("type_name")
-        self.description = kwargs.get("description")
-
-    def validate(self):
-        self.single_id_validate('type_id',self.type_id)
-        self._check_updatable_fields()
-
-        data = {}
-
-        if self.type_name is not None:
-            data["type_name"] = self.text_validate_lower('type_name',self.type_name)
-        if self.description is not None:
-            data["description"] = self.description_validate('description',self.description)
-
-        return data
-        
-    def _check_updatable_fields(self):
-        updatable_fields = [
-            self.type_name,
-            self.description
-        ]
-
-        if not any(v is not None for v in updatable_fields):
-            raise ValueError("at least one field provided for update")
+    

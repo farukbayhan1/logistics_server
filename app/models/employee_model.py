@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, func, UniqueConstraint, text, Numeric, Index
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, func, UniqueConstraint, text, Numeric, Index, Date
 from app.db.base import Base
 
 class GenderModel(Base):
@@ -37,6 +37,7 @@ class EmployeeModel(Base):
     goverment_id = Column(String(11),unique=True,nullable=False)
     name = Column(String(60),nullable=False)
     surname = Column(String(60),nullable=False)
+    birth_date = Column(Date,nullable=False)
     started_at = Column(DateTime,nullable=False)
     ended_at = Column(DateTime,nullable=True)
     salary = Column(Numeric(12,2),nullable=True)
