@@ -44,12 +44,32 @@ class CreateOrderValidator(BaseValidator):
             "is_active"
         ]
 
-        for k, v in self.data.items():
-            if k not in required_keys:
-                if "id" in k:
-                    self.single_id_validate(f'{k}',v)
-                    self.returning_data[f"{k}"] = f"{v}"
+        allowed_keys = [
+            "warehouse_id",
+            "client_id",
+            "status_id",
+            "trip_id",
+            "order_no",
+            "box_count",
+            "order_driver",
+            "order_plate",
+            "trip_number",
+            "delivery_address",
+            "order_confirmation_date",
+            "order_plan_confirmation_date",
+            "delivered_at",
+            "description"
+        ]
 
+        for k, v in self.data.items():
+            if k not in required_keys and k in allowed_keys:
+                if "id" in k or k == "box_count":
+                    self.single_id_validate(k,v)
+                    self.returning_data[k] = v
+                if "date" in k:
+                    self.date_validate(k,v)
+                    self.returning_data[k] = v
+               
 class UpdateOrderStatusValidator(BaseValidator):
     pass
 
