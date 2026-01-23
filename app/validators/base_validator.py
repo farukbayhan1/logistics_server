@@ -101,4 +101,13 @@ class BaseValidator:
             return date_value
         
     def time_stamp_validator(self,field_name:str,value):
-        self
+        if not ValueError:
+            raise ValueError("data can not be empty")
+        
+        try:
+            date_value = datetime.strptime(value,"%Y-%m-%d %H:%M:%S")
+
+        except:
+            raise("date time format must be in YYYY-MM-DD HH:MM:SS")
+        
+        return date_value
